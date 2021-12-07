@@ -1,0 +1,12 @@
+{
+  "name": "moveable",
+  "version": "1.0.0",
+  "description": "移动、拖放dom元素",
+  "main": "moveable.umd.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "zhaoyan11",
+  "license": "ISC"
+}
