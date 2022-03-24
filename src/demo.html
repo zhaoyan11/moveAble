@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>demo</title>
+</head>
+<body>
+
+正常的数字 <input data-type="number" value="-1.23"><br>
+非负数 <input data-type="non-negative-num" value="1.23"><br>
+分数 <input data-type="fraction" value="-1.2/-3.4"><br>
+多个数字 <input data-type="multiple-number" value="-1.2,-3.4"><br>
+多个整数 <input data-type="multiple-integer" value="-1,-2"><br>
+
+
+<script type="module">
+  import Input from './input.js';
+  // 输入正常的数字。这个规则 比chrome规则严一下，比如chrome可以输入两个符号，或者两个正号
+  new Input('*[data-type=number]', val => {
+    return /^-?\d*\.?\d*$/.test(val);
+  });
+
+  // 非负数
+  new Input('*[data-type=non-negative-num]', val => {
+    return /^\d*\.?\d*$/.test(val);
+  })
+
+  // 分数
+  new Input('*[data-type=fraction]', val => {
+    let r1 = /^(-?\d*\.?\d*)(\/-?\d*\.?\d*)?$/.test(val);
+    let r2 = !/-\.?\//.test(val);
+    return r1 && r2;
+  })
+
+  // 多个数字
+  new Input('*[data-type=multiple-number]', val => {
+    let r1 = /^(-?\d*\.?\d*)(,-?\d*\.?\d*)*$/.test(val);
+    let r2 = !/,,/.test(val);
+    let r3 = !/-\.?,/.test(val);
+    return r1 && r2 && r3;
+  })
+
+  // 多个整数
+  new Input('*[data-type=multiple-integer]', val => {
+    let r1 = /^(-?\d*)(,-?\d*)*$/.test(val);
+    let r2 = !/,,/.test(val);
+    let r3 = !/-,/.test(val);
+    return r1 && r2 && r3;
+  })
+
+</script>
+</body>
+</html>
